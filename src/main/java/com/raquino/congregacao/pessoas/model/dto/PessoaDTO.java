@@ -1,7 +1,5 @@
 package com.raquino.congregacao.pessoas.model.dto;
 
-import com.raquino.congregacao.pessoas.entity.Pessoa;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,21 +9,20 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PessoaDTO {
 
-    private Long id;
+    private Integer id;
     private String nome;
+    private String nomeCompleto;
+    private String nomeFamilia;
     private String grupo;
     private String privilegio;
     private String tipoPublicador;
+    private String dtNascimento;
+    private String dtBatismo;
+    private String sexo;
+    private String telefone;
+    private String endereco;
 
     public PessoaDTO() {
-    }
-
-    public PessoaDTO(Pessoa pessoa) {
-        this.id = pessoa.getId();
-        this.nome = pessoa.getNome();
-        this.grupo = pessoa.getGrupo();
-        this.privilegio = pessoa.getPrivilegio();
-        this.tipoPublicador = pessoa.getTipoPublicador();
     }
 
 }

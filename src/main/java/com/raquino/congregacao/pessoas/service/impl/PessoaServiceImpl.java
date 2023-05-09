@@ -29,7 +29,6 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public Pessoa cadastrarPessoa(Pessoa pessoa) {
-        pessoa.setId(null); //garante que o ID seja gerado automaticamente pelo banco de dados
         return pessoaRepository.save(pessoa);
     }
 

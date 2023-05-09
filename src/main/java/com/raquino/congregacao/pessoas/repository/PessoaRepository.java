@@ -13,7 +13,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     List<Pessoa> findByGrupoAndPrivilegioAndTipoPublicador(String grupo, String privilegio, String tipoPublicador);
     
-    Optional<Pessoa> findById(Long id);
+    Optional<Pessoa> findById(Integer id);
 
     List<Pessoa> findByGrupo(String grupo);
 

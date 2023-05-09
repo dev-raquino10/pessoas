@@ -1,9 +1,9 @@
 package com.raquino.congregacao.pessoas.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 import com.raquino.congregacao.pessoas.entity.Pessoa;
 import com.raquino.congregacao.pessoas.service.PessoaService;
@@ -24,39 +25,31 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping
+    @PostMapping("/cadastrar")
+    public ResponseEntity<?> createNewUser(@RequestBody Pessoa pessoa) {
+        Pessoa pessoaCadastrada = pessoaService.cadastrarPessoa(pessoa);
+        return new ResponseEntity<Object>(pessoaCadastrada, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/listarPessoas")
     public List<Pessoa> listarPessoas() {
         return pessoaService.listarPessoas();
-      }
+    }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getById/{id}")
     public ResponseEntity<Pessoa> getPessoaById(@PathVariable Long id) {
         Pessoa pessoa = pessoaService.getPessoaById(id);
-        if (pessoa != null) {
-            return ResponseEntity.ok(pessoa);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(pessoa);
     }
-    
-    @PostMapping
-    public ResponseEntity<Pessoa> cadastrarPessoa(@RequestBody Pessoa pessoa) {
-    Pessoa pessoaCadastrada = pessoaService.cadastrarPessoa(pessoa);
-    return ResponseEntity.created(URI.create("/pessoas/" + pessoaCadastrada.getId())).body(pessoaCadastrada);
-    }
-    
-    @PutMapping("/{id}")
+
+    @PutMapping("/updatePessoa/{id}")
     public ResponseEntity<Pessoa> atualizarPessoa(@PathVariable Long id, @RequestBody Pessoa pessoa) {
         pessoa.setId(id);
         Pessoa pessoaAtualizada = pessoaService.atualizarPessoa(pessoa);
-        if (pessoaAtualizada != null) {
-            return ResponseEntity.ok(pessoaAtualizada);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(pessoaAtualizada);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> excluirPessoa(@PathVariable Long id) {
         boolean pessoaExcluida = pessoaService.excluirPessoa(id);
         if (pessoaExcluida) {
@@ -65,4 +58,5 @@ public class PessoaController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

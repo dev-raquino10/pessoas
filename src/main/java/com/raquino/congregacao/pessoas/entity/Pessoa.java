@@ -23,7 +23,7 @@ import lombok.Setter;
 public class Pessoa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_PESSOA")
     private Long id;
 
